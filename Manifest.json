@@ -1,0 +1,8 @@
+{
+  "manifest_version": 1,
+  "package_name": "com.example.module",
+  "name": "Artist Module",
+  "description": "This a template module.",
+  "author": "John Doe <john.doe@exmaple.com>",
+  "version": 1
+}
