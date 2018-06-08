@@ -15,29 +15,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * @author "Parthipan Ramesh <parthipan.ramesh@cispa.saarland>"
+ * @author "Oliver Schranz <oliver.schranz@cispa.saarland>"
  *
  */
 
 #ifndef ART_MODULES_ARTIST_H_
 #define ART_MODULES_ARTIST_H_
 
-#include <artist/injection/universal_artist.h>
+#include <artist/api/modules/artist.h>
 
-using art::HUniversalArtist;
+
+using art::HArtist;
 using art::MethodInfo;
 using art::OptimizingCompilerStats;
-using art::Injection;
 
-class HModule : public HUniversalArtist {
+/**
+ * Example for an instrumentation pass that makes use of the injection boilerplate code.
+ * The idea is to declare to *which* of your codelib methods method calls should be injected *where* in the code.
+ */
+class HTemplateBasicArtist : public HArtist {
 public:
-    explicit HModule(
+    explicit HTemplateBasicArtist(
             const MethodInfo &method_info,
 #ifdef BUILD_MARSHMALLOW
             bool is_in_ssa_form = true,
 #endif
-            const char *pass_name = "ArtistModule", OptimizingCompilerStats *stats = nullptr)
-            : HUniversalArtist(method_info
+            const char *pass_name = "TemplateBasicArtist", OptimizingCompilerStats *stats = nullptr)
+            : HArtist(method_info
 #ifdef BUILD_MARSHMALLOW
             , is_in_ssa_form
 #endif
@@ -45,7 +49,7 @@ public:
         // Nothing
     }
 
-    vector<Injection> ProvideInjections() const OVERRIDE;
+    void RunPass() OVERRIDE;
 };
 
 #endif  // ART_MODULES_ARTIST_H_

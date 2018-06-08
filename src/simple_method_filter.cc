@@ -15,32 +15,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * @author "Parthipan Ramesh <parthipan.ramesh@cispa.saarland>"
  * @author "Oliver Schranz <oliver.schranz@cispa.saarland>"
  *
  */
 
-#ifndef  ART_MODULES__MODULE_H_
-#define  ART_MODULES__MODULE_H_
+#include "simple_method_filter.h"
 
-#include <artist/api/modules/module.h>
+int SimpleMethodFilter::MOD = 1000000;
 
-using art::Module;
-using art::HArtist;
-using art::MethodInfo;
-using art::CodeLib;
-using art::Filter;
-using art::FilesystemHelper;
+/**
+ * Simple filter implementation that rejects all static methods and for all others only accepts after seeing `MOD`
+ * methods. The reason is that in our (template) injection we write a lot to logcat and hence should avoid to inject
+ * calls to this method too often.
+ *
+ * @param info information & data about the currently compiled method
+ * @return
+ */
+bool SimpleMethodFilter::accept(const art::MethodInfo &info) {
+  if (info.IsStatic()) {
+    return false;
+  }
 
-class TemplateModule : public Module {
-  HArtist * createPass(const MethodInfo &method_info) const OVERRIDE;
+  mtx.lock();
+  bool res =  count == 0;
+  count = (count + 1) % SimpleMethodFilter::MOD;
+  mtx.unlock();
+  return res;
+}
 
-  shared_ptr<const CodeLib> createCodeLib() const OVERRIDE;
-
-public:
-  explicit TemplateModule(const shared_ptr<const FilesystemHelper> fs);
-
-  unique_ptr<Filter> getMethodFilter() const OVERRIDE;
-};
-
-#endif  // ART_MODULES__MODULE_H_

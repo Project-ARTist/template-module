@@ -16,29 +16,31 @@
  * limitations under the License.
  *
  * @author "Parthipan Ramesh <parthipan.ramesh@cispa.saarland>"
+ * @author "Oliver Schranz <oliver.schranz@cispa.saarland>"
  *
  */
 
 #include "codelib.h"
 
-unordered_set<string> &ModuleCodeLib::getMethods() const {
-    // TODO: implement methods like example below
-    // static string instanceField = "Lsaarland/cispa/artist/codelib/CodeLib;traceLog()V";
-    // static unordered_set<string> methods({instanceField});
-    static unordered_set<string> methods({});
-    return methods;
+const std::string TemplateCodeLib::INJECTION_ARTIST_TARGET("Lsaarland/cispa/artist/codelib/CodeLib;injectionArtistTarget(I)V");
+const std::string TemplateCodeLib::BASIC_ARTIST_TARGET("Lsaarland/cispa/artist/codelib/CodeLib;basicArtistTarget(ILjava/lang/Object;)V");
+
+
+unordered_set<string> &TemplateCodeLib::getMethods() const {
+  // here we expose the signatures of codelib methods that are meant to be used from ARTist
+  static unordered_set<string> methods({INJECTION_ARTIST_TARGET, BASIC_ARTIST_TARGET});
+  return methods;
 }
 
-string &ModuleCodeLib::getInstanceField() const {
-    // TODO: implement instance fields like example below
-    // static string instanceField = "Lsaarland/cispa/artist/codelib/CodeLib;INSTANCE";
-    static string instanceField;
-    return instanceField;
+string &TemplateCodeLib::getInstanceField() const {
+  // here we expose the static field with our singleton instance. This will be used by ARTist to obtain an instance
+  // of the codelib to call methods on it.
+  static string instanceField = "Lsaarland/cispa/artist/codelib/CodeLib;INSTANCE";
+  return instanceField;
 }
 
-string &ModuleCodeLib::getCodeClass() const {
-    // TODO: implement code class like example below
-    // static string codeClass = "Lsaarland/cispa/artist/codelib/CodeLib;";
-    static string codeClass;
-    return codeClass;
+string &TemplateCodeLib::getCodeClass() const {
+  // here we expose the codelib's java class to be able to load it in ARTist
+  static string codeClass = "Lsaarland/cispa/artist/codelib/CodeLib;";
+  return codeClass;
 }

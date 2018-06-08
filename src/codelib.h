@@ -16,6 +16,7 @@
  * limitations under the License.
  *
  * @author "Parthipan Ramesh <parthipan.ramesh@cispa.saarland>"
+ * @author "Oliver Schranz <oliver.schranz@cispa.saarland>"
  *
  */
 
@@ -24,32 +25,36 @@
 
 #include <string>
 #include <unordered_set>
-#include <artist/env/codelib.h>
+#include <artist/api/modules/codelib.h>
 
 using std::string;
 using std::unordered_set;
 
 using art::CodeLib;
 
-class ModuleCodeLib : public CodeLib {
+class TemplateCodeLib : public CodeLib {
 public:
-    ModuleCodeLib() = default;
+  static const string INJECTION_ARTIST_TARGET;
+  static const string BASIC_ARTIST_TARGET;
 
-    ModuleCodeLib(const ModuleCodeLib &other) = default;
 
-    ModuleCodeLib(ModuleCodeLib &&other) = default;
+  TemplateCodeLib() = default;
 
-    ~ModuleCodeLib() override = default;
+    TemplateCodeLib(const TemplateCodeLib &other) = default;
 
-    ModuleCodeLib &operator=(const ModuleCodeLib &) = default;
+    TemplateCodeLib(TemplateCodeLib &&other) = default;
 
-    ModuleCodeLib &operator=(ModuleCodeLib &&) = default;
+    ~TemplateCodeLib() override = default;
+
+    TemplateCodeLib &operator=(const TemplateCodeLib &) = default;
+
+    TemplateCodeLib &operator=(TemplateCodeLib &&) = default;
 
     unordered_set<string> &getMethods() const override;
 
     string &getInstanceField() const override;
 
     string &getCodeClass() const override;
-};  // class ModuleCodeLib
+};  // class TemplateCodeLib
 
 #endif  // ART_MODULES_CODELIB_H_

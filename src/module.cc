@@ -16,33 +16,51 @@
  * limitations under the License.
  *
  * @author "Parthipan Ramesh <parthipan.ramesh@cispa.saarland>"
+ * @author "Oliver Schranz <oliver.schranz@cispa.saarland>"
  *
  */
 
-#include <artist/filtering/method_name_filters.h>
+#include <artist/api/filtering/method_name_filters.h>
 
 #include "module.h"
-#include "instrumentation_pass.h"
+//#include "template_basic_pass.h"
+#include "template_injection_pass.h"
 #include "codelib.h"
+#include "simple_method_filter.h"
 
 using std::make_shared;
 using std::unique_ptr;
 
-shared_ptr<HArtist> ArtistModule::createPass(const MethodInfo &method_info) const {
-    return make_shared<HModule>(method_info);
+using art::ModuleId;
+
+TemplateModule::TemplateModule(const shared_ptr<const art::FilesystemHelper> fs) : Module(fs) {}
+
+HArtist * TemplateModule::createPass(const MethodInfo &method_info) const {
+    // Due to the *clone bug* (https://github.com/Project-ARTist/ARTist/issues/10), we can only define one pass per
+    // module right now, but this will change as soon as this bug is resolved.
+  return new (method_info.GetGraph()->GetArena()) HTemplateInjectionArtist(method_info);
+//  return new (method_info.GetGraph()->GetArena()) HTemplateBasicArtist(method_info);
 }
 
-shared_ptr<const CodeLib> ArtistModule::createCodeLib() const {
-    return make_shared<ModuleCodeLib>();
+shared_ptr<const CodeLib> TemplateModule::createCodeLib() const {
+    return make_shared<TemplateCodeLib>();
 }
 
-// Possible MethodFilter: skip android support lib ui methods since they bloat up the log
-unique_ptr<Filter> ArtistModule::getMethodFilter() const {
-    const vector<const string> ui = {"android.support."};
-    return unique_ptr<Filter>(new art::BlacklistFilter(ui));
+
+// Here we can restrict for which methods our module should be executed.
+unique_ptr<Filter> TemplateModule::getMethodFilter() const {
+    // creating blacklists/whitelists for method names is straightforward:
+    // const vector<const string> ui = {"android.support."};
+    // return unique_ptr<Filter>(new MethodNameBlacklist(ui));
+
+    // but here we use a custom filter that only excepts non-static methods (and only a fragment of the others)
+    return unique_ptr<Filter>(new SimpleMethodFilter());
+}
+// the module factory
+extern "C" shared_ptr<Module> create(shared_ptr<const FilesystemHelper> fshelper) {
+    return make_shared<TemplateModule>(fshelper);
 }
 
-// the class factories
-extern "C" shared_ptr<art::Module> create() {
-    return make_shared<ArtistModule>();
+extern "C" ModuleId get_id() {
+  return "saarland.cispa.artist.module.template";
 }

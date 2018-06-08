@@ -6,10 +6,12 @@ set(CMAKE_CXX_STANDARD 11)
 add_executable(template_module
         src/module.cc
         src/module.h
-        src/instrumentation_pass.cc
-        src/instrumentation_pass.h
+        src/template_injection_pass.cc
+        src/template_injection_pass.h
+        src/template_basic_pass.cc
+        src/template_basic_pass.h
         src/codelib.cc
-        src/codelib.h)
+        src/codelib.h src/simple_method_filter.cc src/simple_method_filter.h)
 
 target_include_directories(template_module PUBLIC
         /opt/artist-sdk/include/external/valgrind

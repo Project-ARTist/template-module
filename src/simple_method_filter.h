@@ -15,32 +15,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * @author "Parthipan Ramesh <parthipan.ramesh@cispa.saarland>"
  * @author "Oliver Schranz <oliver.schranz@cispa.saarland>"
  *
  */
 
-#ifndef  ART_MODULES__MODULE_H_
-#define  ART_MODULES__MODULE_H_
 
-#include <artist/api/modules/module.h>
+#ifndef ART_MODULES__STATICMETHODFILTER_H
+#define ART_MODULES__STATICMETHODFILTER_H
 
-using art::Module;
-using art::HArtist;
-using art::MethodInfo;
-using art::CodeLib;
+#include <artist/api/filtering/filter.h>
+
+using std::mutex;
+
 using art::Filter;
-using art::FilesystemHelper;
 
-class TemplateModule : public Module {
-  HArtist * createPass(const MethodInfo &method_info) const OVERRIDE;
-
-  shared_ptr<const CodeLib> createCodeLib() const OVERRIDE;
-
+class SimpleMethodFilter : public Filter {
 public:
-  explicit TemplateModule(const shared_ptr<const FilesystemHelper> fs);
+  SimpleMethodFilter() : count(0) {};
 
-  unique_ptr<Filter> getMethodFilter() const OVERRIDE;
+  bool accept(const art::MethodInfo &info) override;
+private:
+  // after how many non-static methods we will accept one (restrict number of instrumented methods)
+  static int MOD;
+
+  // mutex for atomic `check and write` operation on `count`
+  mutex mtx;
+  // how many methods did we check already
+  int count;
 };
 
-#endif  // ART_MODULES__MODULE_H_
+#endif //ART_MODULES__STATICMETHODFILTER_H

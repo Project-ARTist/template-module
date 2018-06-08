@@ -1,8 +1,8 @@
 {
   "manifest_version": 1,
-  "package_name": "com.example.module",
-  "name": "Artist Module",
-  "description": "This a template module.",
-  "author": "John Doe <john.doe@exmaple.com>",
+  "package_name": "saarland.cispa.artist.module.template",
+  "name": "Template Module",
+  "description": "This a template module, all functionality is purely educational. If you want ",
+  "author": "Parthipan Ramesh <parthipan.ramesh@cipsa.saarland>, Oliver Schranz <oliver.schranz@cipsa.saarland>",
   "version": 1
 }
