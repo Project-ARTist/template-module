@@ -15,13 +15,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * @author "Parthipan Ramesh <parthipan.ramesh@cispa.saarland>"
- * @author "Oliver Schranz <oliver.schranz@cispa.saarland>"
- *
  */
 
-#ifndef ART_MODULES_CODELIB_H_
-#define ART_MODULES_CODELIB_H_
+#ifndef ART_MODULES_TEMPLATE_TEMPLATE_CODELIB_H_
+#define ART_MODULES_TEMPLATE_TEMPLATE_CODELIB_H_
+
 
 #include <string>
 #include <unordered_set>
@@ -33,28 +31,31 @@ using std::unordered_set;
 using art::CodeLib;
 
 class TemplateCodeLib : public CodeLib {
-public:
-  static const string INJECTION_ARTIST_TARGET;
-  static const string BASIC_ARTIST_TARGET;
+    public:
+    // METHODS //////////////////////////////////
+    static const string _M_SAARLAND_CISPA_ARTIST_CODELIB_CODELIB__BASICARTISTTARGET__IL__V;
+    static const string _M_SAARLAND_CISPA_ARTIST_CODELIB_CODELIB__INJECTIONARTISTTARGET__I__V;
+    // FIELDS ///////////////////////////////////
+    static const string _F_CODECLASS_INSTANCE;
+    // CLASSES //////////////////////////////////
+    static const string _C_JAVA_LANG_STRING;
+    static const string _C_JAVA_LANG_OBJECT;
+    static const string _C_CODECLASS;
 
+    public:
+        TemplateCodeLib() = default;
+        TemplateCodeLib(const TemplateCodeLib& other) = default;
+        TemplateCodeLib(TemplateCodeLib&& other) = default;
 
-  TemplateCodeLib() = default;
+        ~TemplateCodeLib() override = default;
 
-    TemplateCodeLib(const TemplateCodeLib &other) = default;
+        TemplateCodeLib& operator=(const TemplateCodeLib&) = default;
+        TemplateCodeLib& operator=(TemplateCodeLib&&) = default;
 
-    TemplateCodeLib(TemplateCodeLib &&other) = default;
-
-    ~TemplateCodeLib() override = default;
-
-    TemplateCodeLib &operator=(const TemplateCodeLib &) = default;
-
-    TemplateCodeLib &operator=(TemplateCodeLib &&) = default;
-
-    unordered_set<string> &getMethods() const override;
-
-    string &getInstanceField() const override;
-
-    string &getCodeClass() const override;
+        unordered_set<string>& getMethods() const override;
+        string& getInstanceField() const override;
+        string& getCodeClass() const override;
 };  // class TemplateCodeLib
 
-#endif  // ART_MODULES_CODELIB_H_
+
+#endif  // ART_MODULES_TEMPLATE_TEMPLATE_CODELIB_H_

@@ -15,32 +15,49 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * @author "Parthipan Ramesh <parthipan.ramesh@cispa.saarland>"
- * @author "Oliver Schranz <oliver.schranz@cispa.saarland>"
- *
  */
 
 #include "codelib.h"
 
-const std::string TemplateCodeLib::INJECTION_ARTIST_TARGET("Lsaarland/cispa/artist/codelib/CodeLib;injectionArtistTarget(I)V");
-const std::string TemplateCodeLib::BASIC_ARTIST_TARGET("Lsaarland/cispa/artist/codelib/CodeLib;basicArtistTarget(ILjava/lang/Object;)V");
 
+// CODE_GENERATOR //////////////////////////////////////////////////////////////////////////////////////////////////////
+// METHODS //////////////////////////////////
+const string TemplateCodeLib::_M_SAARLAND_CISPA_ARTIST_CODELIB_CODELIB__BASICARTISTTARGET__IL__V =
+    "Lsaarland/cispa/artist/codelib/CodeLib;basicArtistTarget(ILjava/lang/Object;)V";
+const string TemplateCodeLib::_M_SAARLAND_CISPA_ARTIST_CODELIB_CODELIB__INJECTIONARTISTTARGET__I__V =
+    "Lsaarland/cispa/artist/codelib/CodeLib;injectionArtistTarget(I)V";
+
+// FIELDS ///////////////////////////////////
+const string TemplateCodeLib::_F_CODECLASS_INSTANCE =
+    "Lsaarland/cispa/artist/codelib/CodeLib;INSTANCE";
+
+// CLASSES //////////////////////////////////
+const string TemplateCodeLib::_C_JAVA_LANG_STRING =
+    "Ljava/lang/String;";
+const string TemplateCodeLib::_C_JAVA_LANG_OBJECT =
+    "Ljava/lang/Object;";
+const string TemplateCodeLib::_C_CODECLASS =
+    "Lsaarland/cispa/artist/codelib/CodeLib;";
 
 unordered_set<string> &TemplateCodeLib::getMethods() const {
-  // here we expose the signatures of codelib methods that are meant to be used from ARTist
-  static unordered_set<string> methods({INJECTION_ARTIST_TARGET, BASIC_ARTIST_TARGET});
-  return methods;
+    static unordered_set<string> methods({
+    TemplateCodeLib::_M_SAARLAND_CISPA_ARTIST_CODELIB_CODELIB__BASICARTISTTARGET__IL__V,
+    TemplateCodeLib::_M_SAARLAND_CISPA_ARTIST_CODELIB_CODELIB__INJECTIONARTISTTARGET__I__V,
+    });
+    return methods;
 }
 
 string &TemplateCodeLib::getInstanceField() const {
-  // here we expose the static field with our singleton instance. This will be used by ARTist to obtain an instance
-  // of the codelib to call methods on it.
-  static string instanceField = "Lsaarland/cispa/artist/codelib/CodeLib;INSTANCE";
-  return instanceField;
+    static string instanceField = TemplateCodeLib::_F_CODECLASS_INSTANCE;
+    return instanceField;
 }
 
 string &TemplateCodeLib::getCodeClass() const {
-  // here we expose the codelib's java class to be able to load it in ARTist
-  static string codeClass = "Lsaarland/cispa/artist/codelib/CodeLib;";
-  return codeClass;
+    static string codeClass = TemplateCodeLib::_C_CODECLASS;
+    return codeClass;
 }
+
+
+// CODE_GENERATOR END //////////////////////////////////////////////////////////////////////////////////////////////////
+
+

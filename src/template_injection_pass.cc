@@ -65,7 +65,7 @@ vector<shared_ptr<const Injection>> HTemplateInjectionArtist::ProvideInjections(
 
   // The injection combines the signature of the method we want to inject a call to, its parameters, and the targets
   // we defined earlier.
-  auto injection = make_shared<const Injection>(TemplateCodeLib::INJECTION_ARTIST_TARGET, params, targets);
+  auto injection = make_shared<const Injection>(TemplateCodeLib::_M_SAARLAND_CISPA_ARTIST_CODELIB_CODELIB__INJECTIONARTISTTARGET__I__V, params, targets);
 
   // In theory, you can have as many injections as you want, but due to the so called *clone bug*
   // (https://github.com/Project-ARTist/ARTist/issues/10), this is currently not possible.

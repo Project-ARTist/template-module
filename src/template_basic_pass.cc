@@ -57,7 +57,7 @@ void HTemplateBasicArtist::RunPass() {
   art::HInstruction* cursor = graph_->GetEntryBlock()->GetLastInstruction();
 
   // we will add a call to this method
-  auto codelib_method = TemplateCodeLib::BASIC_ARTIST_TARGET;
+  auto codelib_method = TemplateCodeLib::_M_SAARLAND_CISPA_ARTIST_CODELIB_CODELIB__BASICARTISTTARGET__IL__V;
 
   // we will collect all parameters as HInstructions. Instructions also represent their return value, hence if you
   // want to use the return value of a method invocation, use the invocation instruction as a parameter.
